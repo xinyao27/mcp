@@ -1,0 +1,67 @@
+{
+  "name": "name",
+  "version": "0.0.0",
+  "description": "",
+  "type": "module",
+  "keywords": [],
+  "license": "MIT",
+  "homepage": "https://github.com/xinyao27/[name]#readme",
+  "bugs": {
+    "url": "https://github.com/xinyao27/[name]/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xinyao27/[name].git"
+  },
+  "author": {
+    "name": "xinyao",
+    "email": "hi@xinyao.me"
+  },
+  "funding": "https://github.com/sponsors/xinyao27",
+  "files": [
+    "dist/*"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsdown",
+    "typecheck": "tsc --noEmit",
+    "lint": "nr typecheck && eslint . --fix",
+    "prepublishOnly": "nr build",
+    "release": "release-it",
+    "start": "bun run src/index.ts",
+    "test": "bun test",
+    "up": "taze major -I",
+    "prepare": "simple-git-hooks"
+  },
+  "devDependencies": {
+    "@antfu/ni": "^24.3.0",
+    "@release-it/conventional-changelog": "^10.0.0",
+    "@types/bun": "^1.2.9",
+    "@xystack/style-guide": "^0.3.5",
+    "eslint": "^9.24.0",
+    "lint-staged": "^15.5.1",
+    "prettier": "^3.5.3",
+    "release-it": "^18.1.2",
+    "simple-git-hooks": "^2.12.1",
+    "taze": "^19.0.4",
+    "tsdown": "^0.6.10",
+    "typescript": "^5.8.3"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged"
+  },
+  "lint-staged": {
+    "*": "prettier -w --ignore-unknown"
+  },
+  "prettier": "@xystack/style-guide/prettier"
+}
