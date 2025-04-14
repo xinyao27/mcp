@@ -1,10 +1,10 @@
 import type { Tool } from 'fastmcp'
 
 import { createFetch, createSchema } from '@better-fetch/fetch'
+import { imageContent } from 'fastmcp'
 import z from 'zod'
 
 import { env } from '../env'
-import { convertUrlToBase64 } from '../utils'
 
 const catToolParametersSchema = z.object({
   numberOfCats: z.number().min(1).max(10).optional(),
@@ -14,7 +14,9 @@ const DEFAULT_NUMBER_OF_CATS = 1
 
 export const catTool: Tool<undefined, typeof catToolParametersSchema> = {
   description: 'Get a cat image',
-  execute: async ({ numberOfCats }) => {
+  execute: async ({ numberOfCats }, { log }) => {
+    log.info(`Getting ${numberOfCats ?? DEFAULT_NUMBER_OF_CATS} cat image`)
+
     const { data, error } = await $fetch('/images/search', {
       headers: {
         'x-api-key': env.CAT_API_KEY,
@@ -28,19 +30,10 @@ export const catTool: Tool<undefined, typeof catToolParametersSchema> = {
       throw new Error(error.message)
     }
 
+    log.info(`Found ${data.length} cat image`)
+
     // Convert the URL to a base64 string
-    const content = (
-      await Promise.all(
-        data.map(async (cat) => {
-          const { base64: data, mimeType } = await convertUrlToBase64({ url: cat.url })
-          return {
-            data,
-            mimeType,
-            type: 'image' as const,
-          }
-        }),
-      )
-    ).filter((item) => item.data) // Remove items with no data
+    const content = await Promise.all(data.map(async (cat) => imageContent({ url: cat.url })))
 
     return {
       content,
