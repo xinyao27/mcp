@@ -30,7 +30,32 @@ export const catTool: Tool<undefined, typeof catToolParametersSchema> = {
     log.info(`Found ${data.length} cat image`)
 
     // Convert the URL to a base64 string
-    const content = await Promise.all(data.map(async (cat) => imageContent({ url: cat.url })))
+    const content = (
+      await Promise.all(
+        data.map(async (cat) => {
+          const breed = cat.breeds?.[0]
+          const image = await imageContent({ url: cat.url })
+
+          if (!breed) {
+            return [image]
+          }
+
+          return [
+            {
+              text: JSON.stringify({
+                description: breed.description,
+                lifeSpan: breed.life_span,
+                name: breed.name,
+                origin: breed.origin,
+                temperament: breed.temperament,
+              }),
+              type: 'text' as const,
+            },
+            image,
+          ]
+        }),
+      )
+    ).flat()
 
     return {
       content,
