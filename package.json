@@ -1,17 +1,17 @@
 {
-  "name": "name",
+  "name": "@xystack/mcp",
   "version": "0.0.0",
   "description": "",
   "type": "module",
   "keywords": [],
   "license": "MIT",
-  "homepage": "https://github.com/xinyao27/[name]#readme",
+  "homepage": "https://github.com/xinyao27/mcp#readme",
   "bugs": {
-    "url": "https://github.com/xinyao27/[name]/issues"
+    "url": "https://github.com/xinyao27/mcp/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/xinyao27/[name].git"
+    "url": "git+https://github.com/xinyao27/mcp.git"
   },
   "author": {
     "name": "xinyao",
@@ -38,13 +38,23 @@
     "lint": "nr typecheck && eslint . --fix",
     "prepublishOnly": "nr build",
     "release": "release-it",
-    "start": "bun run src/index.ts",
+    "start": "bun --watch run src/server.ts",
+    "inspect": "npx fastmcp inspect src/server.ts",
     "test": "bun test",
     "up": "taze major -I",
     "prepare": "simple-git-hooks"
   },
+  "dependencies": {
+    "@better-fetch/fetch": "^1.1.18",
+    "@t3-oss/env-core": "^0.12.0",
+    "dotenv": "^16.5.0",
+    "fastmcp": "^1.21.0",
+    "zod": "^3.24.2",
+    "zod-to-json-schema": "^3.24.5"
+  },
   "devDependencies": {
     "@antfu/ni": "^24.3.0",
+    "@modelcontextprotocol/inspector": "^0.8.2",
     "@release-it/conventional-changelog": "^10.0.0",
     "@types/bun": "^1.2.9",
     "@xystack/style-guide": "^0.3.5",
