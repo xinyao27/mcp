@@ -7,7 +7,7 @@ let client: Client
 
 beforeAll(async () => {
   const transport = new StdioClientTransport({
-    args: ['run', path.join(process.cwd(), 'src/server.ts')],
+    args: ['run', path.join(process.cwd(), 'src/index.ts')],
     command: 'bun',
   })
   client = new Client({

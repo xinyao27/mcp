@@ -7,7 +7,7 @@ let client: Client
 
 beforeAll(async () => {
   const transport = new StdioClientTransport({
-    args: ['run', path.join(process.cwd(), 'src/server.ts')],
+    args: ['run', path.join(process.cwd(), 'src/index.ts')],
     command: 'bun',
   })
   client = new Client({
@@ -21,13 +21,13 @@ afterAll(async () => {
   await client.close()
 })
 
-describe('cat', () => {
-  it('should be able to call cat', async () => {
+describe('time', () => {
+  it('should be able to call time', async () => {
     const result = await client.callTool({
       arguments: {
-        numberOfCats: 1,
+        timezone: 'America/New_York',
       },
-      name: 'cat',
+      name: 'time',
     })
     expect(result).toBeDefined()
   })
