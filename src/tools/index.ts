@@ -1,3 +1,5 @@
+import type { Tool } from '../types'
+
 import { catTool } from './cat'
 
-export const tools = [catTool]
+export const tools: Tool<any>[] = [catTool]

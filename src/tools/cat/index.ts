@@ -8,7 +8,7 @@ import { catDataSchema, catQuerySchema, catToolParametersSchema } from './schema
 
 const DEFAULT_NUMBER_OF_CATS = 1
 
-export const catTool = defineTool<typeof catToolParametersSchema>({
+export const catTool = defineTool({
   description: 'Get a cat image',
   execute: async ({ numberOfCats }) => {
     const { data, error } = await $fetch('/images/search', {

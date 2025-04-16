@@ -1,5 +1,4 @@
 import type { CallToolResultSchema } from '@modelcontextprotocol/sdk/types.js'
-import type { StandardSchemaV1 } from '@standard-schema/spec'
 
 import { AudioContentSchema, ImageContentSchema, TextContentSchema } from '@modelcontextprotocol/sdk/types.js'
 import { z } from 'zod'
@@ -13,15 +12,22 @@ export const ErrorContentSchema = z.object({
 
 export type ErrorContent = z.infer<typeof ErrorContentSchema>
 
-export type Tool<Parameters extends ToolParameters = ToolParameters> = {
-  description?: string
-  execute: (args: StandardSchemaV1.InferOutput<Parameters>) => Promise<ToolResult>
+export interface Server {
   name: string
-  parameters?: Parameters
+  tools: Tool[]
+  transport?: 'http-streamable' | 'stdio'
+  version: `${number}.${number}.${number}`
 }
 
-export type ToolParameters = StandardSchemaV1
-
-export type ToolResult = z.infer<typeof CallToolResultSchema>
+export type Tool<P extends ToolParameters = ToolParameters> = {
+  description?: string
+  execute: (args: z.infer<P>) => Promise<ToolResult>
+  name: string
+  parameters?: P
+}
 
 export { AudioContentSchema, ImageContentSchema, TextContentSchema }
+
+export type ToolParameters = z.ZodType
+
+export type ToolResult = z.infer<typeof CallToolResultSchema>

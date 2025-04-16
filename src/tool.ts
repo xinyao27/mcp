@@ -1,5 +1,5 @@
 import type { Tool, ToolParameters } from './types'
 
-export function defineTool<Parameters extends ToolParameters = ToolParameters>(tool: Tool<Parameters>) {
+export function defineTool<P extends ToolParameters>(tool: Tool<P>) {
   return tool
 }
