@@ -39,16 +39,17 @@
     "prepublishOnly": "nr build",
     "release": "release-it",
     "start": "bun --watch run src/server.ts",
-    "inspect": "npx fastmcp inspect src/server.ts",
-    "test": "bun test",
+    "inspect": "npx @modelcontextprotocol/inspector bun run src/server.ts",
+    "test": "vitest",
     "up": "taze major -I",
     "prepare": "simple-git-hooks"
   },
   "dependencies": {
     "@better-fetch/fetch": "^1.1.18",
+    "@modelcontextprotocol/sdk": "^1.9.0",
     "@t3-oss/env-core": "^0.12.0",
     "dotenv": "^16.5.0",
-    "fastmcp": "^1.21.0",
+    "file-type": "^20.4.1",
     "zod": "^3.24.2",
     "zod-to-json-schema": "^3.24.5"
   },
@@ -65,7 +66,8 @@
     "simple-git-hooks": "^2.12.1",
     "taze": "^19.0.4",
     "tsdown": "^0.6.10",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.1"
   },
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged"
